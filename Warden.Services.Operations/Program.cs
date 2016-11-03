@@ -13,10 +13,11 @@ namespace Warden.Services.Operations
 {
     public class Program
     {
+        //TODO: Fix subscription to commands by this and other services.
         public static void Main(string[] args)
         {
             WebServiceHost
-                .Create<Startup>(port: 10010)
+                .Create<Startup>(port: 5090)
                 .UseAutofac(Bootstrapper.LifetimeScope)
                 .UseRabbitMq(queueName: typeof(Program).Namespace)
                 .SubscribeToCommand<RequestNewApiKey>()
