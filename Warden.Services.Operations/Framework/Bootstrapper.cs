@@ -12,6 +12,7 @@ using Warden.Common.Mongo;
 using Warden.Common.Nancy;
 using Warden.Services.Operations.Repositories;
 using Warden.Services.Operations.Services;
+using RawRabbit.Configuration;
 
 namespace Warden.Services.Operations.Framework
 {
@@ -36,7 +37,10 @@ namespace Warden.Services.Operations.Framework
                 builder.RegisterType<MongoDbInitializer>().As<IDatabaseInitializer>();
                 builder.RegisterType<OperationRepository>().As<IOperationRepository>();
                 builder.RegisterType<OperationService>().As<IOperationService>();
-                builder.RegisterInstance(BusClientFactory.CreateDefault()).As<IBusClient>();
+                var rawRabbitConfiguration = _configuration.GetSettings<RawRabbitConfiguration>();
+                builder.RegisterInstance(rawRabbitConfiguration).SingleInstance();
+                builder.RegisterInstance(BusClientFactory.CreateDefault(rawRabbitConfiguration))
+                    .As<IBusClient>();
                 var coreAssembly = typeof(Startup).GetTypeInfo().Assembly;
                 builder.RegisterAssemblyTypes(coreAssembly).AsClosedTypesOf(typeof(IEventHandler<>));
                 builder.RegisterAssemblyTypes(coreAssembly).AsClosedTypesOf(typeof(ICommandHandler<>));
