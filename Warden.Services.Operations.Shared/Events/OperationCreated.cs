@@ -1,4 +1,5 @@
 ﻿using System;
+using Warden.Common.Events;
 
 namespace Warden.Services.Operations.Shared.Events
 {
