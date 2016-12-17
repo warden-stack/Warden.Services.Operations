@@ -18,10 +18,10 @@ namespace Warden.Services.Operations.Services
         public async Task<Maybe<Operation>> GetAsync(Guid requestId)
             => await _operationRepository.GetAsync(requestId);
 
-        public async Task CreateAsync(Guid requestId, string userId, string origin, string resource,
+        public async Task CreateAsync(Guid requestId, string name, string userId, string origin, string resource,
             DateTime createdAt)
         {
-            var operation = new Operation(requestId, userId, origin, resource, createdAt);
+            var operation = new Operation(requestId, name, userId, origin, resource, createdAt);
             await _operationRepository.AddAsync(operation);
         }
 

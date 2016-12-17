@@ -7,6 +7,7 @@ namespace Warden.Services.Operations.Domain
     public class Operation : IdentifiableEntity, ITimestampable
     {
         public Guid RequestId { get; protected set; }
+        public string Name { get; protected set; }
         public string UserId { get; protected set; }
         public string Origin { get; protected set; }
         public string Resource { get; protected set; }
@@ -19,18 +20,16 @@ namespace Warden.Services.Operations.Domain
         {
         }
 
-        public Operation(Guid requestId, string userId,
-            string origin, string resource, DateTime createdAt,
-            string message = "")
+        public Operation(Guid requestId, string name, string userId,
+            string origin, string resource, DateTime createdAt)
         {
+            Name = name;
             RequestId = requestId;
             UserId = userId;
             Origin = origin;
             Resource = resource;
             CreatedAt = createdAt;
             State = States.Accepted;
-            UpdatedAt = DateTime.UtcNow;
-            SetMessage(message);
         }
 
         public void Complete()

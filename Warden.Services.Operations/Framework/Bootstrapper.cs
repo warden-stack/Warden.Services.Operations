@@ -33,6 +33,7 @@ namespace Warden.Services.Operations.Framework
             container.Update(builder =>
             {
                 builder.RegisterInstance(_configuration.GetSettings<MongoDbSettings>());
+                builder.RegisterInstance(AutoMapperConfig.InitializeMapper());
                 builder.RegisterModule<MongoDbModule>();
                 builder.RegisterType<MongoDbInitializer>().As<IDatabaseInitializer>();
                 builder.RegisterType<OperationRepository>().As<IOperationRepository>();
@@ -58,7 +59,7 @@ namespace Warden.Services.Operations.Framework
                 ctx.Response.Headers.Add("Access-Control-Allow-Origin", "*");
                 ctx.Response.Headers.Add("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
             };
-            Logger.Info("Warden.Services.Organizations API Started");
+            Logger.Info("Warden.Services.Organizations API has started.");
         }
     }
 }
