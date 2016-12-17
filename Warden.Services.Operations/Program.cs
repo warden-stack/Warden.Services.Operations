@@ -1,19 +1,18 @@
-﻿using Warden.Common.Commands.ApiKeys;
-using Warden.Common.Commands.Organizations;
-using Warden.Common.Commands.WardenChecks;
-using Warden.Common.Commands.Wardens;
-using Warden.Common.Events.ApiKeys;
-using Warden.Common.Events.Features;
-using Warden.Common.Events.Organizations;
-using Warden.Common.Events.Wardens;
-using Warden.Common.Host;
+﻿using Warden.Common.Host;
 using Warden.Services.Operations.Framework;
+using Warden.Services.Features.Shared.Events;
+using Warden.Services.Organizations.Shared.Commands;
+using Warden.Services.Organizations.Shared.Events;
+using Warden.Services.Spawn.Shared.Commands;
+using Warden.Services.Users.Shared.Commands;
+using Warden.Services.Users.Shared.Events;
+using Warden.Services.WardenChecks.Shared.Commands;
+using Warden.Services.WardenChecks.Shared.Events;
 
 namespace Warden.Services.Operations
 {
     public class Program
     {
-        //TODO: Fix subscription to commands by this and other services.
         public static void Main(string[] args)
         {
             WebServiceHost
@@ -26,7 +25,7 @@ namespace Warden.Services.Operations
                 .SubscribeToCommand<CreateOrganization>()
                 .SubscribeToCommand<RequestNewWarden>()
                 .SubscribeToCommand<CreateWarden>()
-                .SubscribeToCommand<RequestWardenCheckResultProcessing>()
+                .SubscribeToCommand<RequestProcessWardenCheckResult>()
                 .SubscribeToCommand<ProcessWardenCheckResult>()
                 .SubscribeToEvent<ApiKeyCreated>()
                 .SubscribeToEvent<OrganizationCreated>()

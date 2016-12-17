@@ -2,20 +2,19 @@
 using System.Threading.Tasks;
 using RawRabbit;
 using Warden.Common.Commands;
-using Warden.Common.Commands.ApiKeys;
-using Warden.Common.Commands.Organizations;
-using Warden.Common.Commands.WardenChecks;
-using Warden.Common.Commands.Wardens;
-using Warden.Common.Events.Operations;
 using Warden.Services.Operations.Domain;
 using Warden.Services.Operations.Services;
+using Warden.Services.Operations.Shared.Events;
+using Warden.Services.Organizations.Shared.Commands;
+using Warden.Services.Users.Shared.Commands;
+using Warden.Services.WardenChecks.Shared.Commands;
 
 namespace Warden.Services.Operations.Handlers
 {
     public class GenericCommandHandler : ICommandHandler<RequestNewApiKey>, ICommandHandler<CreateApiKey>,
         ICommandHandler<RequestNewOrganization>, ICommandHandler<CreateOrganization>,
         ICommandHandler<RequestNewWarden>, ICommandHandler<CreateWarden>,
-        ICommandHandler<RequestWardenCheckResultProcessing>, ICommandHandler<ProcessWardenCheckResult>
+        ICommandHandler<RequestProcessWardenCheckResult>, ICommandHandler<ProcessWardenCheckResult>
     {
         private readonly IBusClient _bus;
         private readonly IOperationService _operationService;
@@ -44,7 +43,7 @@ namespace Warden.Services.Operations.Handlers
         public async Task HandleAsync(CreateWarden command)
             => await ProcessAsync(command);
 
-        public async Task HandleAsync(RequestWardenCheckResultProcessing command)
+        public async Task HandleAsync(RequestProcessWardenCheckResult command)
             => await CreateAsync(command);
 
         public async Task HandleAsync(ProcessWardenCheckResult command)
@@ -54,16 +53,16 @@ namespace Warden.Services.Operations.Handlers
         {
             await _operationService.CreateAsync(command.Request.Id, command.UserId,
                 command.Request.Origin, command.Request.Resource, command.Request.CreatedAt);
-            await _bus.PublishAsync(new OperationCreated(command.Request.Id,
+            await _bus.PublishAsync(new OperationCreated(command.Request.Id, command.Request.Name,
                 command.UserId, command.Request.Origin, command.Request.Resource, States.Accepted,
-                command.Request.CreatedAt, DateTime.UtcNow, string.Empty));
+                command.Request.CreatedAt));
         }
 
         private async Task ProcessAsync(IAuthenticatedCommand command)
         {
             await _operationService.ProcessAsync(command.Request.Id);
             await _bus.PublishAsync(new OperationUpdated(command.Request.Id,
-                command.UserId, States.Processing, DateTime.UtcNow, string.Empty));
-        } 
+                command.UserId, States.Processing, string.Empty, string.Empty, DateTime.UtcNow));
+        }
     }
 }

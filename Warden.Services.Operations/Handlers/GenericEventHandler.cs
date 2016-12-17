@@ -2,17 +2,18 @@
 using System.Threading.Tasks;
 using RawRabbit;
 using Warden.Common.Events;
-using Warden.Common.Events.ApiKeys;
-using Warden.Common.Events.Features;
-using Warden.Common.Events.Operations;
-using Warden.Common.Events.Organizations;
-using Warden.Common.Events.Wardens;
 using Warden.Services.Operations.Domain;
 using Warden.Services.Operations.Services;
+using Warden.Services.Features.Shared.Events;
+using Warden.Services.Operations.Shared.Events;
+using Warden.Services.Organizations.Shared.Events;
+using Warden.Services.Users.Shared;
+using Warden.Services.Users.Shared.Events;
+using Warden.Services.WardenChecks.Shared.Events;
 
 namespace Warden.Services.Operations.Handlers
 {
-    public class GenericEventHandler : IEventHandler<ApiKeyCreated>, 
+    public class GenericEventHandler : IEventHandler<ApiKeyCreated>,
         IEventHandler<OrganizationCreated>,
         IEventHandler<WardenCreated>, IEventHandler<WardenCheckResultProcessed>,
         IEventHandler<FeatureRejected>
@@ -45,14 +46,16 @@ namespace Warden.Services.Operations.Handlers
         {
             await _operationService.CompleteAsync(@event.RequestId);
             await _bus.PublishAsync(new OperationUpdated(@event.RequestId,
-                @event.UserId, States.Completed, DateTime.UtcNow, string.Empty));
+                @event.UserId, States.Completed, string.Empty, string.Empty,
+                DateTime.UtcNow));
         }
 
         private async Task RejectAsync(IRejectedEvent @event)
         {
             await _operationService.RejectAsync(@event.RequestId);
             await _bus.PublishAsync(new OperationUpdated(@event.RequestId,
-                @event.UserId, States.Rejected, DateTime.UtcNow, @event.Reason));
+                @event.UserId, States.Rejected, @event.Code, @event.Reason,
+                DateTime.UtcNow));
         }
     }
 }
