@@ -28,11 +28,11 @@ namespace Warden.Services.Operations.Services
         public async Task ProcessAsync(Guid requestId)
             => await UpdateAsync(requestId, x => x.Process());
 
-        public async Task RejectAsync(Guid requestId)
-            => await UpdateAsync(requestId, x => x.Reject());
+        public async Task RejectAsync(Guid requestId, string code, string message)
+            => await UpdateAsync(requestId, x => x.Reject(code, message));
 
-        public async Task CompleteAsync(Guid requestId)
-            => await UpdateAsync(requestId, x => x.Complete());
+        public async Task CompleteAsync(Guid requestId, string message = null)
+            => await UpdateAsync(requestId, x => x.Complete(message));
 
         private async Task UpdateAsync(Guid requestId, Action<Operation> update)
         {

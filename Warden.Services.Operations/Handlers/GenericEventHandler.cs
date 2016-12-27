@@ -75,7 +75,7 @@ namespace Warden.Services.Operations.Handlers
 
         private async Task RejectAsync(IRejectedEvent @event)
         {
-            await _operationService.RejectAsync(@event.RequestId);
+            await _operationService.RejectAsync(@event.RequestId, @event.Code, @event.Reason);
             await _bus.PublishAsync(new OperationUpdated(@event.RequestId,
                 @event.UserId, States.Rejected, @event.Code, @event.Reason,
                 DateTime.UtcNow));

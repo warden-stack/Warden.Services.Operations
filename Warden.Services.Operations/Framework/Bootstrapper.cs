@@ -42,9 +42,10 @@ namespace Warden.Services.Operations.Framework
                 builder.RegisterInstance(rawRabbitConfiguration).SingleInstance();
                 builder.RegisterInstance(BusClientFactory.CreateDefault(rawRabbitConfiguration))
                     .As<IBusClient>();
-                var coreAssembly = typeof(Startup).GetTypeInfo().Assembly;
-                builder.RegisterAssemblyTypes(coreAssembly).AsClosedTypesOf(typeof(IEventHandler<>));
-                builder.RegisterAssemblyTypes(coreAssembly).AsClosedTypesOf(typeof(ICommandHandler<>));
+
+                var assembly = typeof(Startup).GetTypeInfo().Assembly;
+                builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(IEventHandler<>));
+                builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(ICommandHandler<>));
             });
             LifetimeScope = container;
         }
