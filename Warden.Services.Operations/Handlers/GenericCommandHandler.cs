@@ -75,7 +75,7 @@ namespace Warden.Services.Operations.Handlers
         private async Task ProcessAsync(IAuthenticatedCommand command)
         {
             await _operationService.ProcessAsync(command.Request.Id);
-            await _bus.PublishAsync(new OperationUpdated(command.Request.Id,
+            await _bus.PublishAsync(new OperationUpdated(command.Request.Id, command.Request.Name,
                 command.UserId, States.Processing, string.Empty, string.Empty, DateTime.UtcNow));
         }
     }

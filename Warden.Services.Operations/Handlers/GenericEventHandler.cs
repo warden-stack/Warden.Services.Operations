@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Humanizer;
 using RawRabbit;
 using Warden.Common.Events;
 using Warden.Services.Operations.Domain;
@@ -69,16 +70,17 @@ namespace Warden.Services.Operations.Handlers
         private async Task CompleteAsync(IEvent @event, string userId = null)
         {
             await _operationService.CompleteAsync(@event.RequestId);
-            await _bus.PublishAsync(new OperationUpdated(@event.RequestId, userId,
+            await _bus.PublishAsync(new OperationUpdated(@event.RequestId, userId, 
+                @event.GetType().Name.Humanize(LetterCasing.LowerCase).Underscore(),
                 States.Completed, OperationCodes.Success, string.Empty, DateTime.UtcNow));
         }
 
         private async Task RejectAsync(IRejectedEvent @event)
         {
             await _operationService.RejectAsync(@event.RequestId, @event.Code, @event.Reason);
-            await _bus.PublishAsync(new OperationUpdated(@event.RequestId,
-                @event.UserId, States.Rejected, @event.Code, @event.Reason,
-                DateTime.UtcNow));
+            await _bus.PublishAsync(new OperationUpdated(@event.RequestId, @event.UserId,
+                @event.GetType().Name.Humanize(LetterCasing.LowerCase).Underscore(),
+                States.Rejected, @event.Code, @event.Reason, DateTime.UtcNow));
         }
     }
 }
