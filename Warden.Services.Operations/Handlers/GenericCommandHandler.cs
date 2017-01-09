@@ -68,7 +68,7 @@ namespace Warden.Services.Operations.Handlers
             await _operationService.CreateAsync(command.Request.Id, command.Request.Name, userId,
                 command.Request.Origin, command.Request.Resource, command.Request.CreatedAt);
             await _bus.PublishAsync(new OperationCreated(command.Request.Id, command.Request.Name,
-                userId, command.Request.Origin, command.Request.Resource, States.Accepted,
+                userId, command.Request.Origin, command.Request.Resource, States.Created,
                 command.Request.CreatedAt));
         }
 

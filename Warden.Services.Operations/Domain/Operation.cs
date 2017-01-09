@@ -32,7 +32,7 @@ namespace Warden.Services.Operations.Domain
             Origin = origin;
             Resource = resource;
             CreatedAt = createdAt;
-            State = States.Accepted;
+            State = States.Created;
         }
 
         public void Complete(string message = null)
