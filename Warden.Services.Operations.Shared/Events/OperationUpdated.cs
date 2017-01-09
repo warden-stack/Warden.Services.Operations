@@ -7,6 +7,7 @@ namespace Warden.Services.Operations.Shared.Events
     {
         public Guid RequestId { get; }
         public string UserId { get; }
+        public string Name { get; }
         public string State { get; }
         public string Code { get; }
         public string Message { get; }
@@ -17,12 +18,13 @@ namespace Warden.Services.Operations.Shared.Events
         }
 
         public OperationUpdated(Guid requestId,
-            string userId, string state,
-            string code, string message,
-            DateTime updatedAt)
+            string userId, string name, 
+            string state,string code, 
+            string message, DateTime updatedAt)
         {
             RequestId = requestId;
             UserId = userId;
+            Name = name;
             State = state;
             Code = code;
             Message = message;
