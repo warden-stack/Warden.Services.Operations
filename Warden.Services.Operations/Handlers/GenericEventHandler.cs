@@ -20,7 +20,8 @@ namespace Warden.Services.Operations.Handlers
         IEventHandler<FeatureRejected>, IEventHandler<SignedUp>,
         IEventHandler<SignedIn>, IEventHandler<SignedOut>,
         IEventHandler<SignUpRejected>, IEventHandler<SignInRejected>,
-        IEventHandler<SignOutRejected>
+        IEventHandler<SignOutRejected>,
+        IEventHandler<UsernameChanged>, IEventHandler<ChangeUsernameRejected>
     {
         private readonly IBusClient _bus;
         private readonly IOperationService _operationService;
@@ -62,6 +63,12 @@ namespace Warden.Services.Operations.Handlers
             => await RejectAsync(@event);
 
         public async Task HandleAsync(SignOutRejected @event)
+            => await RejectAsync(@event);
+
+        public async Task HandleAsync(UsernameChanged @event)
+            => await CompleteForAuthenticatedUserAsync(@event);
+
+        public async Task HandleAsync(ChangeUsernameRejected @event)
             => await RejectAsync(@event);
 
         private async Task CompleteForAuthenticatedUserAsync(IAuthenticatedEvent @event)

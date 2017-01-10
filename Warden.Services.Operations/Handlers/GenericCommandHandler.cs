@@ -16,7 +16,7 @@ namespace Warden.Services.Operations.Handlers
         ICommandHandler<RequestNewWarden>, ICommandHandler<CreateWarden>,
         ICommandHandler<RequestProcessWardenCheckResult>, ICommandHandler<ProcessWardenCheckResult>,
         ICommandHandler<SignIn>, ICommandHandler<SignUp>,
-        ICommandHandler<SignOut>
+        ICommandHandler<SignOut>, ICommandHandler<ChangeUsername>
     {
         private readonly IBusClient _bus;
         private readonly IOperationService _operationService;
@@ -58,6 +58,9 @@ namespace Warden.Services.Operations.Handlers
             => await CreateAsync(command);
 
         public async Task HandleAsync(SignOut command)
+            => await CreateForAuthenticatedUserAsync(command);
+
+        public async Task HandleAsync(ChangeUsername command)
             => await CreateForAuthenticatedUserAsync(command);
 
         private async Task CreateForAuthenticatedUserAsync(IAuthenticatedCommand command)

@@ -29,6 +29,7 @@ namespace Warden.Services.Operations
                 .SubscribeToCommand<SignIn>()
                 .SubscribeToCommand<SignUp>()
                 .SubscribeToCommand<SignOut>()
+                .SubscribeToCommand<ChangeUsername>()
                 .SubscribeToEvent<ApiKeyCreated>()
                 .SubscribeToEvent<OrganizationCreated>()
                 .SubscribeToEvent<WardenCreated>()
@@ -40,6 +41,8 @@ namespace Warden.Services.Operations
                 .SubscribeToEvent<SignInRejected>()
                 .SubscribeToEvent<SignUpRejected>()
                 .SubscribeToEvent<SignOutRejected>()
+                .SubscribeToEvent<UsernameChanged>()
+                .SubscribeToEvent<ChangeUsernameRejected>()
                 .Build()
                 .Run();
         }
