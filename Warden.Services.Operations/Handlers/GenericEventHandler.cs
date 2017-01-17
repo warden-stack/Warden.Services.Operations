@@ -14,9 +14,10 @@ using Warden.Services.WardenChecks.Shared.Events;
 
 namespace Warden.Services.Operations.Handlers
 {
-    public class GenericEventHandler : IEventHandler<ApiKeyCreated>,
-        IEventHandler<OrganizationCreated>,
-        IEventHandler<WardenCreated>, IEventHandler<WardenCheckResultProcessed>,
+    public class GenericEventHandler : IEventHandler<ApiKeyCreated>, IEventHandler<CreateApiKeyRejected>, 
+        IEventHandler<OrganizationCreated>, IEventHandler<CreateOrganizationRejected>, 
+        IEventHandler<WardenCreated>, IEventHandler<CreateWardenRejected>, 
+        IEventHandler<WardenCheckResultProcessed>,
         IEventHandler<FeatureRejected>, IEventHandler<SignedUp>,
         IEventHandler<SignedIn>, IEventHandler<SignedOut>,
         IEventHandler<SignUpRejected>, IEventHandler<SignInRejected>,
@@ -35,11 +36,19 @@ namespace Warden.Services.Operations.Handlers
         public async Task HandleAsync(ApiKeyCreated @event)
             => await CompleteForAuthenticatedUserAsync(@event);
 
+        public async Task HandleAsync(CreateApiKeyRejected @event)
+            => await RejectAsync(@event);
+
         public async Task HandleAsync(WardenCreated @event)
             => await CompleteForAuthenticatedUserAsync(@event);
+         public async Task HandleAsync(CreateWardenRejected @event)
+            => await RejectAsync(@event);           
 
         public async Task HandleAsync(OrganizationCreated @event)
             => await CompleteForAuthenticatedUserAsync(@event);
+
+        public async Task HandleAsync(CreateOrganizationRejected @event)
+            => await RejectAsync(@event);
 
         public async Task HandleAsync(WardenCheckResultProcessed @event)
             => await CompleteForAuthenticatedUserAsync(@event);
