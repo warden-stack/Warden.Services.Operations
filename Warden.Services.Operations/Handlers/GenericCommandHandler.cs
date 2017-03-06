@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using RawRabbit;
-using Warden.Common.Commands;
+using Warden.Messages.Commands;
 using Warden.Services.Operations.Domain;
 using Warden.Services.Operations.Services;
-using Warden.Services.Operations.Shared.Events;
-using Warden.Services.Organizations.Shared.Commands;
-using Warden.Services.Users.Shared.Commands;
-using Warden.Services.WardenChecks.Shared.Commands;
+using Warden.Messages.Events.Operations;
+using Warden.Messages.Commands.Organizations;
+using Warden.Messages.Commands.Users;
+using Warden.Messages.Commands.WardenChecks;
 
 namespace Warden.Services.Operations.Handlers
 {

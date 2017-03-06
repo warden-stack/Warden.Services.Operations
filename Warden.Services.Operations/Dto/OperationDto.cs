@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Warden.Services.Operations.Shared.Dto
+namespace Warden.Services.Operations.Dto
 {
     public class OperationDto
     {

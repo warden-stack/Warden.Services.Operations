@@ -14,9 +14,10 @@ using RawRabbit.Configuration;
 using Warden.Common.Nancy.Serialization;
 using Newtonsoft.Json;
 using Nancy;
+using Nancy.Bootstrappers.Autofac;
 using Warden.Common.Handlers;
-using Warden.Common.Commands;
-using Warden.Common.Events;
+using Warden.Messages.Commands;
+using Warden.Messages.Events;
 using System.Reflection;
 
 namespace Warden.Services.Operations.Framework

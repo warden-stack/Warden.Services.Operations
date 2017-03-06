@@ -1,12 +1,12 @@
 ﻿using Warden.Common.Host;
 using Warden.Services.Operations.Framework;
-using Warden.Services.Features.Shared.Events;
-using Warden.Services.Organizations.Shared.Commands;
-using Warden.Services.Organizations.Shared.Events;
-using Warden.Services.Users.Shared.Commands;
-using Warden.Services.Users.Shared.Events;
-using Warden.Services.WardenChecks.Shared.Commands;
-using Warden.Services.WardenChecks.Shared.Events;
+using Warden.Messages.Events.Features;
+using Warden.Messages.Commands.Organizations;
+using Warden.Messages.Events.Organizations;
+using Warden.Messages.Commands.Users;
+using Warden.Messages.Events.Users;
+using Warden.Messages.Commands.WardenChecks;
+using Warden.Messages.Events.WardenChecks;
 
 namespace Warden.Services.Operations
 {

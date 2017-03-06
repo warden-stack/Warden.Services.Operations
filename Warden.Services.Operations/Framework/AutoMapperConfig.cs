@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Warden.Services.Operations.Domain;
-using Warden.Services.Operations.Shared.Dto;
+using Warden.Services.Operations.Dto;
 
 namespace Warden.Services.Operations.Framework
 {

@@ -2,15 +2,14 @@
 using System.Threading.Tasks;
 using Humanizer;
 using RawRabbit;
-using Warden.Common.Events;
+using Warden.Messages.Events;
 using Warden.Services.Operations.Domain;
 using Warden.Services.Operations.Services;
-using Warden.Services.Features.Shared.Events;
-using Warden.Services.Operations.Shared;
-using Warden.Services.Operations.Shared.Events;
-using Warden.Services.Organizations.Shared.Events;
-using Warden.Services.Users.Shared.Events;
-using Warden.Services.WardenChecks.Shared.Events;
+using Warden.Messages.Events.Features;
+using Warden.Messages.Events.Operations;
+using Warden.Messages.Events.Organizations;
+using Warden.Messages.Events.Users;
+using Warden.Messages.Events.WardenChecks;
 
 namespace Warden.Services.Operations.Handlers
 {

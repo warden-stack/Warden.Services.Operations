@@ -1,7 +1,7 @@
 ﻿using System;
 using Warden.Common.Domain;
 using Warden.Common.Extensions;
-using Warden.Services.Operations.Shared;
+using Warden.Services.Operations;
 
 namespace Warden.Services.Operations.Domain
 {
